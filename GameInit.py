@@ -4,10 +4,10 @@ import Constants as Const
 screen = pygame.display.set_mode((Const.disp_width, Const.disp_height))
 background = pygame.image.load(Const.sprites_dir + 'space.png').convert()
 
-ship_up_img = pygame.image.load(Const.sprites_dir + 'ship_u.png').convert()
+ship_up_img = pygame.image.load(Const.sprites_dir + 'ship_up.png').convert()
 ship_up_img.set_colorkey(pygame.color.Color('white'))
 
-proj1_up_img = pygame.image.load(Const.sprites_dir + 'bull_u.png').convert()
+proj1_up_img = pygame.image.load(Const.sprites_dir + 'proj1_up.png').convert()
 proj1_up_img.set_colorkey(pygame.color.Color('white'))
 
 ship_imgs = [ship_up_img]
