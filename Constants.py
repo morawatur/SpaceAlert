@@ -12,6 +12,7 @@ half_ship_size = [ x // 2 for x in ship_size ]
 half_ship_oblique_size = [ x // 2 for x in ship_oblique_size ]
 
 ship_speed = 10
+rot_delay = 5
 
 proj_speed = 20
 proj_max_dist =20

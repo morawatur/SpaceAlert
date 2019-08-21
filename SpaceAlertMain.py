@@ -22,6 +22,8 @@ spaceship = PlayerShip(ship_imgs[0], screen_center)
 old_center = ship_imgs[0].get_rect().center
 projectiles = []
 
+rot_delay = 1
+
 while 1:
     for event in pygame.event.get():
         if event.type in (pygame.QUIT,):
@@ -41,13 +43,18 @@ while 1:
     d = pygame.key.get_pressed()[pygame.K_DOWN]
     sp = pygame.key.get_pressed()[pygame.K_SPACE]
 
-    if r:
+    if rot_delay > 0:
+        rot_delay -= 1
+
+    if r and not rot_delay:
+        rot_delay = Const.rot_delay
         spaceship.direc -= 1
         if spaceship.direc < 0:
             spaceship.direc += len(directions)
         spaceship.change_direc(spaceship.direc)
 
-    if l:
+    if l and not rot_delay:
+        rot_delay = Const.rot_delay
         spaceship.direc += 1
         spaceship.direc %= len(directions)
         spaceship.change_direc(spaceship.direc)
