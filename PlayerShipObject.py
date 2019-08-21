@@ -33,10 +33,10 @@ class PlayerShipObject(GameObject):
         This method takes into account the rules by which the ship/projectile is able to move in space.
         On the other hand the 'move()' super method is used to arbitrary position objects on screen.
         """
-        if self.direc != direc:
-            self.direc = direc
-            self.set_img_from_direc()
-            self.set_speed_xy_from_direc()
+        # if self.direc != direc:
+        #     self.direc = direc
+        #     self.set_img_from_direc()
+        #     self.set_speed_xy_from_direc()
 
         super(PlayerShipObject, self).move(self.speed_xy)
 

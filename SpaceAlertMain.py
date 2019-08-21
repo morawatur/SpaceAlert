@@ -41,29 +41,43 @@ while 1:
     d = pygame.key.get_pressed()[pygame.K_DOWN]
     sp = pygame.key.get_pressed()[pygame.K_SPACE]
 
-    if r and not (u or d):
-        spaceship.move_sp(directions['r'])
+    if r:
+        spaceship.direc -= 1
+        if spaceship.direc < 0:
+            spaceship.direc += len(directions)
+        spaceship.change_direc(spaceship.direc)
 
-    if l and not (u or d):
-        spaceship.move_sp(directions['l'])
+    if l:
+        spaceship.direc += 1
+        spaceship.direc %= len(directions)
+        spaceship.change_direc(spaceship.direc)
 
-    if u and not (r or l):
-        spaceship.move_sp(directions['u'])
+    if u:
+        spaceship.move_sp(spaceship.direc)
 
-    if d and not (r or l):
-        spaceship.move_sp(directions['d'])
-
-    if r and u:
-        spaceship.move_sp(directions['ru'])
-
-    if r and d:
-        spaceship.move_sp(directions['rd'])
-
-    if l and u:
-        spaceship.move_sp(directions['lu'])
-
-    if l and d:
-        spaceship.move_sp(directions['ld'])
+    # if r and not (u or d):
+    #     spaceship.move_sp(directions['r'])
+    #
+    # if l and not (u or d):
+    #     spaceship.move_sp(directions['l'])
+    #
+    # if u and not (r or l):
+    #     spaceship.move_sp(directions['u'])
+    #
+    # if d and not (r or l):
+    #     spaceship.move_sp(directions['d'])
+    #
+    # if r and u:
+    #     spaceship.move_sp(directions['ru'])
+    #
+    # if r and d:
+    #     spaceship.move_sp(directions['rd'])
+    #
+    # if l and u:
+    #     spaceship.move_sp(directions['lu'])
+    #
+    # if l and d:
+    #     spaceship.move_sp(directions['ld'])
 
     if sp:
         n_projs = len(projectiles)
