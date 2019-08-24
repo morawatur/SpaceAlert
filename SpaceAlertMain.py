@@ -72,13 +72,13 @@ while 1:
         spaceship.change_orient(spaceship.orient)
 
     if u:
-        print(spaceship.orient, spaceship.direc)
+        last_speed = spaceship.speed
         spaceship.increase_speed_xy()
         if spaceship.speed > Const.ship_max_speed:
-            spaceship.decrease_speed_xy()
-
-    # if d:
-    #    spaceship.decrease_speed_xy()
+            spaceship.speed = last_speed
+            # update speed_xy so that the old direction is not lost
+            # add dv(x, y) insted of setting new v(x, y)
+            spaceship.update_speed_xy()
 
     if sp:
         n_projs = len(projectiles)
