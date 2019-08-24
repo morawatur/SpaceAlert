@@ -1,10 +1,11 @@
 import sys, pygame
+from numpy import array, arange
 
 import Constants as Const
 from GameInit import screen, background, ship_imgs, proj1_imgs
 from PlayerShipObject import PlayerShipObject as PlayerShip
 from ProjectileObject import ProjectileObject as Projectile
-from Support import directions
+from Support import directions, unit_speeds
 
 #-----------------------------------------------------------------------------
 
@@ -59,32 +60,31 @@ while 1:
 
     if r and not rot_delay:
         rot_delay = Const.rot_delay
-        spaceship.direc -= 1
-        if spaceship.direc < 0:
-            spaceship.direc += len(directions)
-        spaceship.change_direc(spaceship.direc)
+        spaceship.orient -= 1
+        if spaceship.orient < 0:
+            spaceship.orient += len(directions)
+        spaceship.change_orient(spaceship.orient)
 
     if l and not rot_delay:
         rot_delay = Const.rot_delay
-        spaceship.direc += 1
-        spaceship.direc %= len(directions)
-        spaceship.change_direc(spaceship.direc)
+        spaceship.orient += 1
+        spaceship.orient %= len(directions)
+        spaceship.change_orient(spaceship.orient)
 
     if u:
-        if spaceship.speed < Const.ship_max_speed:
-            spaceship.increase_speed(1)
-        spaceship.set_speed_xy_from_direc()
+        print(spaceship.orient, spaceship.direc)
+        spaceship.increase_speed_xy()
+        if spaceship.speed > Const.ship_max_speed:
+            spaceship.decrease_speed_xy()
 
-    if d:
-        if spaceship.speed > 0:
-            spaceship.decrease_speed(1)
-        spaceship.set_speed_xy_from_direc()
+    # if d:
+    #    spaceship.decrease_speed_xy()
 
     if sp:
         n_projs = len(projectiles)
         if n_projs == 0 or projectiles[n_projs-1].dist > Const.proj_delay:
             proj_speed = Const.proj_speed + spaceship.speed     # ???
-            b = Projectile(proj1_imgs[0], spaceship.pos.center, ship=spaceship, speed=proj_speed, direc=spaceship.direc)
+            b = Projectile(proj1_imgs[0], spaceship.pos.center, ship=spaceship, speed=proj_speed, orient=spaceship.orient)
             projectiles.append(b)
 
     for proj in projectiles:
