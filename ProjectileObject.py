@@ -47,5 +47,11 @@ class ProjectileObject(GameObject):
     def set_speed_xy_from_direc(self):
         self.speed_xy = list(self.speed * np.array(unit_speeds[self.direc]))
 
+    def increase_speed(self, inc=1):
+        self.speed += inc
+
+    def decrease_speed(self, dec=1):
+        self.speed -= dec
+
     def move_sp(self):
         super(ProjectileObject, self).move(self.speed_xy)

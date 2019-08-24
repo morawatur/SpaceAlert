@@ -28,19 +28,15 @@ class PlayerShipObject(GameObject):
     def set_speed_xy_from_direc(self):
         self.speed_xy = list(self.speed * np.array(unit_speeds[self.direc]))
 
-    def move_sp(self, direc=directions['u']):
+    def increase_speed(self, inc=1):
+        self.speed += inc
+
+    def decrease_speed(self, dec=1):
+        self.speed -= dec
+
+    def move_sp(self):
         """
         This method takes into account the rules by which the ship/projectile is able to move in space.
         On the other hand the 'move()' super method is used to arbitrary position objects on screen.
         """
-        # if self.direc != direc:
-        #     self.direc = direc
-        #     self.set_img_from_direc()
-        #     self.set_speed_xy_from_direc()
-
         super(PlayerShipObject, self).move(self.speed_xy)
-
-        if self.pos.right > Const.disp_width:
-            self.pos.left = 0
-        if self.pos.bottom > Const.disp_height:
-            self.pos.top = 0

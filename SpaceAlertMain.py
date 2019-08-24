@@ -18,7 +18,7 @@ from Support import directions
 screen.blit(background, (0, 0))
 screen_center = ((Const.disp_width - Const.ship_size[0]) // 2, (Const.disp_height - Const.ship_size[1]) // 2)
 
-spaceship = PlayerShip(ship_imgs[0], screen_center)
+spaceship = PlayerShip(ship_imgs[0], screen_center, speed=0)
 old_center = ship_imgs[0].get_rect().center
 projectiles = []
 
@@ -36,6 +36,17 @@ while 1:
     for x in range(len(projectiles)-1, -1, -1):
         if projectiles[x].dist > projectiles[x].max_dist:
             projectiles.remove(projectiles[x])
+
+    spaceship.move_sp()
+
+    if spaceship.pos.left > Const.disp_width:
+        spaceship.pos.right = 0
+    if spaceship.pos.top > Const.disp_height:
+        spaceship.pos.bottom = 0
+    if spaceship.pos.right < 0:
+        spaceship.pos.left = Const.disp_width
+    if spaceship.pos.bottom < 0:
+        spaceship.pos.top = Const.disp_height
 
     r = pygame.key.get_pressed()[pygame.K_RIGHT]
     l = pygame.key.get_pressed()[pygame.K_LEFT]
@@ -60,36 +71,20 @@ while 1:
         spaceship.change_direc(spaceship.direc)
 
     if u:
-        spaceship.move_sp(spaceship.direc)
+        if spaceship.speed < Const.ship_max_speed:
+            spaceship.increase_speed(1)
+        spaceship.set_speed_xy_from_direc()
 
-    # if r and not (u or d):
-    #     spaceship.move_sp(directions['r'])
-    #
-    # if l and not (u or d):
-    #     spaceship.move_sp(directions['l'])
-    #
-    # if u and not (r or l):
-    #     spaceship.move_sp(directions['u'])
-    #
-    # if d and not (r or l):
-    #     spaceship.move_sp(directions['d'])
-    #
-    # if r and u:
-    #     spaceship.move_sp(directions['ru'])
-    #
-    # if r and d:
-    #     spaceship.move_sp(directions['rd'])
-    #
-    # if l and u:
-    #     spaceship.move_sp(directions['lu'])
-    #
-    # if l and d:
-    #     spaceship.move_sp(directions['ld'])
+    if d:
+        if spaceship.speed > 0:
+            spaceship.decrease_speed(1)
+        spaceship.set_speed_xy_from_direc()
 
     if sp:
         n_projs = len(projectiles)
         if n_projs == 0 or projectiles[n_projs-1].dist > Const.proj_delay:
-            b = Projectile(proj1_imgs[0], spaceship.pos.center, ship=spaceship, direc=spaceship.direc)
+            proj_speed = Const.proj_speed + spaceship.speed     # ???
+            b = Projectile(proj1_imgs[0], spaceship.pos.center, ship=spaceship, speed=proj_speed, direc=spaceship.direc)
             projectiles.append(b)
 
     for proj in projectiles:
