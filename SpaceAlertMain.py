@@ -1,11 +1,10 @@
 import sys, pygame
-from numpy import array, arange
 
 import Constants as Const
 from GameInit import screen, background, ship_imgs, proj1_imgs
 from PlayerShipObject import PlayerShipObject as PlayerShip
 from ProjectileObject import ProjectileObject as Projectile
-from Support import directions, unit_speeds
+from Support import directions, unit_speeds, are_directions_equal
 
 #-----------------------------------------------------------------------------
 
@@ -24,6 +23,7 @@ old_center = ship_imgs[0].get_rect().center
 projectiles = []
 
 rot_delay = 1
+match_coeff = Const.match_dir_speed_with_orient_speed_coeff
 
 while 1:
     for event in pygame.event.get():
@@ -73,12 +73,20 @@ while 1:
 
     if u:
         last_speed = spaceship.speed
+        spaceship.update_direc()
         spaceship.increase_speed_xy()
+
         if spaceship.speed > Const.ship_max_speed:
             spaceship.speed = last_speed
-            # update speed_xy so that the old direction is not lost
-            # add dv(x, y) insted of setting new v(x, y)
-            spaceship.update_speed_xy()
+            spaceship.speed_xy = [ last_speed * vi for vi in spaceship.direc ]
+            if not are_directions_equal(spaceship.direc, unit_speeds[spaceship.orient]):
+                goal_speed_xy = [ last_speed * vi for vi in unit_speeds[spaceship.orient] ]
+                lvx, lvy = spaceship.speed_xy
+                gvx, gvy = goal_speed_xy
+                dv = [match_coeff * (gvx - lvx), match_coeff * (gvy - lvy)]
+                spaceship.change_speed_xy_by(dv)
+        else:
+            spaceship.update_direc()
 
     if sp:
         n_projs = len(projectiles)

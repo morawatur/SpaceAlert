@@ -16,6 +16,7 @@ rot_ang_increment = 22.5
 ship_speed = 10
 ship_max_speed = 25
 rot_delay = 2
+match_dir_speed_with_orient_speed_coeff = 0.05
 
 proj_speed = 20
 proj_max_dist = 20

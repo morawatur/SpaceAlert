@@ -9,11 +9,22 @@ class PlayerShipObject(GameObject):
     def __init__(self, image, pos=(0, 0), speed=Const.ship_speed, orient=directions['r']):
         super(PlayerShipObject, self).__init__(image, pos)
         self.orient = orient
-        # self.direc = orient
+        self.direc = unit_speeds[orient]
         self.speed = speed
-        self.speed_xy = [0, 0]
+        self.speed_xy = unit_speeds[orient]
         self.set_img_from_orient()
         self.update_speed_xy()
+
+    def update_direc(self):
+        v_abs = self.speed
+        vx, vy = self.speed_xy
+
+        if vx == 0 and vy == 0:
+            self.direc = unit_speeds[self.orient]
+        elif v_abs != 0:
+            self.direc = [ vx / v_abs, vy / v_abs ]
+        else:
+            self.direc = [ vx, vy ]
 
     def change_orient(self, orient):
         self.orient = orient
@@ -29,7 +40,7 @@ class PlayerShipObject(GameObject):
         self.speed = np.abs(np.complex(self.speed_xy[0], self.speed_xy[1]))
 
     def update_speed_xy(self):
-        self.speed_xy = list(self.speed * np.array(unit_speeds[self.orient]))
+        self.speed_xy = list(self.speed * np.array(self.direc))
 
     def increase_speed_xy(self):
         dv = [ dvi for dvi in unit_speeds[self.orient] ]
