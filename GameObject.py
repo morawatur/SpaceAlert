@@ -1,3 +1,4 @@
+
 class GameObject:
     def __init__(self, image, pos=(0, 0)):
         self.image = image
