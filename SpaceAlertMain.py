@@ -6,14 +6,14 @@ from PlayerShipObject import PlayerShipObject as PlayerShip
 from ProjectileObject import ProjectileObject as Projectile
 from Support import directions, unit_speeds, are_directions_equal
 
-#-----------------------------------------------------------------------------
+# ----------------------------------------------------------------------
 
 # Game will be more in Asteroids type:
 # keys left/right - ship rotation
 # keys up/down - accelerate/break
 # spaceship won't stop moving until player stops it
 
-#-----------------------------------------------------------------------------
+# ----------------------------------------------------------------------
 
 screen.blit(background, (0, 0))
 screen_center = ((Const.disp_width - Const.ship_size[0]) // 2, (Const.disp_height - Const.ship_size[1]) // 2)
