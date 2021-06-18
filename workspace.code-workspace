@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+    ],
+    "settings": {},
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "[WINDOWS][RUN][DEBUG}",
+                "type": "python",
+                "request": "launch",
+                "program": "SpaceAlertMain.py",
+                "console": "integratedTerminal"
+            }
+        ]
+    }
+}
